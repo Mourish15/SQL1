@@ -1,0 +1,260 @@
+mysql> create database medical;
+Query OK, 1 row affected (0.05 sec)
+
+mysql> use medical;
+Database changed
+mysql> CREATE TABLE doctors (
+    -> doctor_id INT PRIMARY KEY,
+    -> doctor_name VARCHAR(50),
+    -> specialization VARCHAR(50)
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> desc doctors;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| doctor_id      | int         | NO   | PRI | NULL    |       |
+| doctor_name    | varchar(50) | YES  |     | NULL    |       |
+| specialization | varchar(50) | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+3 rows in set (0.02 sec)
+
+mysql> create table patient (patient_id int(15)primary key,patientname varchar(50),age int (15));
+Query OK, 0 rows affected, 2 warnings (0.06 sec)
+
+mysql> create table appiontment(appiont_id int (15)primary key,doctor_id int,patient_id int,appiont_date date,foreign key(doctor_id) references doctors(doctor_id) on delete cascade,foreign key(patient_id) references patient(patient_id) on delete set null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> create table appiontment(appiont_id int (15)primary key,doctor_id int,patient_id int,appiont_date date,foreign key(doctor_id) references doctors(doctor_id) on delete cascade,foreign key(patient_id) references patient(patient_id) on delete set null);
+Query OK, 0 rows affected, 1 warning (0.09 sec)
+
+mysql> desc appointment;
+ERROR 1146 (42S02): Table 'medical.appointment' doesn't exist
+mysql> desc appiontment;
++--------------+------+------+-----+---------+-------+
+| Field        | Type | Null | Key | Default | Extra |
++--------------+------+------+-----+---------+-------+
+| appiont_id   | int  | NO   | PRI | NULL    |       |
+| doctor_id    | int  | YES  | MUL | NULL    |       |
+| patient_id   | int  | YES  | MUL | NULL    |       |
+| appiont_date | date | YES  |     | NULL    |       |
++--------------+------+------+-----+---------+-------+
+4 rows in set (0.03 sec)
+
+mysql> desc patient;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| patient_id  | int         | NO   | PRI | NULL    |       |
+| patientname | varchar(50) | YES  |     | NULL    |       |
+| age         | int         | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table doctors drop column specialition;
+ERROR 1091 (42000): Can't DROP 'specialition'; check that column/key exists
+mysql> alter table doctors drop column specialiation;
+ERROR 1091 (42000): Can't DROP 'specialiation'; check that column/key exists
+mysql> alter table doctors drop column specialization;
+Query OK, 0 rows affected (0.12 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table add column specialization varchar(20) on default;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add column specialization varchar(20) on default' at line 1
+mysql>  alter table add column specialization varchar(20)  default "genric";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add column specialization varchar(20)  default "genric"' at line 1
+mysql>  alter table add column specialization varchar (20)  default 'genric';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add column specialization varchar (20)  default 'genric'' at line 1
+mysql> ALTER TABLE your_table
+    -> ADD specialization VARCHAR(20) DEFAULT 'genric';
+ERROR 1146 (42S02): Table 'medical.your_table' doesn't exist
+mysql> ALTER TABLE your_table
+    -> ADD specialization VARCHAR(20) DEFAULT 'genric';
+ERROR 1146 (42S02): Table 'medical.your_table' doesn't exist
+mysql> ALTER TABLE medical add specialization VARCHAR(20) DEFAULT 'genric';
+ERROR 1146 (42S02): Table 'medical.medical' doesn't exist
+mysql> ALTER TABLE doctors add specialization VARCHAR(20) DEFAULT 'genric';
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into doctors values (10,"kumar","surgeon");
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into doctors values (11,"guru","cardiologist");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into doctors values(12,"jayakumar","maran");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into doctors values (13,"gugan","orthopedic");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into patient values(100,"darun",19);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into patient values(101,"suresh",22);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into patient values(102,"kamal",23);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into patient values(103,"jamal",20);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into appiontment values(200,10,100,20/1/2026);
+ERROR 1292 (22007): Incorrect date value: '0.009871668311944718' for column 'appiont_date' at row 1
+mysql> insert into appiontment values(200,10,100,'2026-1-20);
+    '> 
+    '> s
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> kjkxxnc;
+    '> 
+    '> 
+    '> 
+    '> 
+    '> ^C
+mysql> insert into appiontment values (200,10,'2026-1-20);
+    '> ^C
+mysql> insert into appiontment values (200,10,'2026-1-20);
+    '> ^C
+mysql> insert into appiontment values (200,10,'2026-1-20');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into appiontment values (200,10,100,'2026-1-20');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into appiontment values (201,11,101,'2026-1-20');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into appiontment values (202,12,102,'2026-1-21');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select *from aooiontment;
+ERROR 1146 (42S02): Table 'medical.aooiontment' doesn't exist
+mysql> select *from appiontment;
++------------+-----------+------------+--------------+
+| appiont_id | doctor_id | patient_id | appiont_date |
++------------+-----------+------------+--------------+
+|        200 |        10 |        100 | 2026-01-20   |
+|        201 |        11 |        101 | 2026-01-20   |
+|        202 |        12 |        102 | 2026-01-21   |
++------------+-----------+------------+--------------+
+3 rows in set (0.00 sec)
+
+mysql> select *from patient;
++------------+-------------+------+
+| patient_id | patientname | age  |
++------------+-------------+------+
+|        100 | darun       |   19 |
+|        101 | suresh      |   22 |
+|        102 | kamal       |   23 |
+|        103 | jamal       |   20 |
++------------+-------------+------+
+4 rows in set (0.00 sec)
+
+mysql> select *from doctors;
++-----------+-------------+----------------+
+| doctor_id | doctor_name | specialization |
++-----------+-------------+----------------+
+|        10 | kumar       | surgeon        |
+|        11 | guru        | cardiologist   |
+|        12 | jayakumar   | maran          |
+|        13 | gugan       | orthopedic     |
++-----------+-------------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into appiontment(203,13,103,'2026-1-23');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '203,13,103,'2026-1-23')' at line 1
+mysql> insert into appiontment values(203,13,103,'2026-1-23');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> update appiontment set appiont_date='2026-1-21' where appiont_id=200;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> insert into patient values(104,"haran",35);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> delete from patient where patient_id=104;
+Query OK, 1 row affected (0.03 sec)
+
+mysql> alter table add column patient_type ="young" where age<25;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add column patient_type ="young" where age<25' at line 1
+mysql> alter table add column patient_type varchar(25);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add column patient_type varchar(25)' at line 1
+mysql> alter table patient add column patient_type varchar(25);
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> update patient set patient_type="young" where age<25;
+Query OK, 4 rows affected (0.03 sec)
+Rows matched: 4  Changed: 4  Warnings: 0
+
+mysql> select *from patient;
++------------+-------------+------+--------------+
+| patient_id | patientname | age  | patient_type |
++------------+-------------+------+--------------+
+|        100 | darun       |   19 | young        |
+|        101 | suresh      |   22 | young        |
+|        102 | kamal       |   23 | young        |
+|        103 | jamal       |   20 | young        |
++------------+-------------+------+--------------+
+4 rows in set (0.00 sec)
+
+mysql> alter table appiontment rename to appointment;
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> select *from appointment;
++------------+-----------+------------+--------------+
+| appiont_id | doctor_id | patient_id | appiont_date |
++------------+-----------+------------+--------------+
+|        200 |        10 |        100 | 2026-01-21   |
+|        201 |        11 |        101 | 2026-01-20   |
+|        202 |        12 |        102 | 2026-01-21   |
+|        203 |        13 |        103 | 2026-01-23   |
++------------+-----------+------------+--------------+
+4 rows in set (0.02 sec)
+
+mysql> delete from doctors where doctor_id=12;
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select *from doctors;
++-----------+-------------+----------------+
+| doctor_id | doctor_name | specialization |
++-----------+-------------+----------------+
+|        10 | kumar       | surgeon        |
+|        11 | guru        | cardiologist   |
+|        13 | gugan       | orthopedic     |
++-----------+-------------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> select *from appointment;
++------------+-----------+------------+--------------+
+| appiont_id | doctor_id | patient_id | appiont_date |
++------------+-----------+------------+--------------+
+|        200 |        10 |        100 | 2026-01-21   |
+|        201 |        11 |        101 | 2026-01-20   |
+|        203 |        13 |        103 | 2026-01-23   |
++------------+-----------+------------+--------------+
+3 rows in set (0.00 sec)
+
+mysql> auto commit=0;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'auto commit=0' at line 1
+mysql> set autocommit=0;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> savepoint sp1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> truncate table appointment;
+Query OK, 0 rows affected (0.13 sec)
+
+mysql> select *from appointment;
+Empty set (0.00 sec)
+
+mysql> rollback to sp1;
+ERROR 1305 (42000): SAVEPOINT sp1 does not exist
