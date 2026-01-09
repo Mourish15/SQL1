@@ -1,0 +1,141 @@
+mysql> use second
+ERROR 1049 (42000): Unknown database 'second'
+mysql> use second2;
+Database changed
+mysql> select *from Banktable;
++---------------+--------------+------------+---------+------------+---------+
+| Accountholder | Account_type | Account_no | Deposit | Withdrawal | Balance |
++---------------+--------------+------------+---------+------------+---------+
+| ram           | savings      |       1223 |    5000 |       2000 |    3000 |
+| kumar         | savings      |       1224 |    7000 |       2000 |    5000 |
+| suresh        | savings      |       1225 |    5000 |       3000 |    2000 |
+| ramesh        | current      |       1226 |    5000 |       2000 |    3000 |
+| daya          | savings      |       1227 |    8000 |       5000 |    3000 |
++---------------+--------------+------------+---------+------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> insert into Banktable ("raghu","current",1228,9000,2000,7000);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"raghu","current",1228,9000,2000,7000)' at line 1
+mysql> select *from Banktable order by balance desc limit 3;
++---------------+--------------+------------+---------+------------+---------+
+| Accountholder | Account_type | Account_no | Deposit | Withdrawal | Balance |
++---------------+--------------+------------+---------+------------+---------+
+| kumar         | savings      |       1224 |    7000 |       2000 |    5000 |
+| ram           | savings      |       1223 |    5000 |       2000 |    3000 |
+| ramesh        | current      |       1226 |    5000 |       2000 |    3000 |
++---------------+--------------+------------+---------+------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select *from Banktable order by balance desc limit 3 offset 1;
++---------------+--------------+------------+---------+------------+---------+
+| Accountholder | Account_type | Account_no | Deposit | Withdrawal | Balance |
++---------------+--------------+------------+---------+------------+---------+
+| ram           | savings      |       1223 |    5000 |       2000 |    3000 |
+| ramesh        | current      |       1226 |    5000 |       2000 |    3000 |
+| daya          | savings      |       1227 |    8000 |       5000 |    3000 |
++---------------+--------------+------------+---------+------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select *from Banktable order by balance desc limit 3 , 1;
++---------------+--------------+------------+---------+------------+---------+
+| Accountholder | Account_type | Account_no | Deposit | Withdrawal | Balance |
++---------------+--------------+------------+---------+------------+---------+
+| daya          | savings      |       1227 |    8000 |       5000 |    3000 |
++---------------+--------------+------------+---------+------------+---------+
+1 row in set (0.00 sec)
+
+mysql> select distinct Account_type from Banktable;
++--------------+
+| Account_type |
++--------------+
+| savings      |
+| current      |
++--------------+
+2 rows in set (0.00 sec)
+
+mysql> select count(*) from Banktable;
++----------+
+| count(*) |
++----------+
+|        5 |
++----------+
+1 row in set (0.02 sec)
+
+mysql> select count(*) from Banktable as bank;
++----------+
+| count(*) |
++----------+
+|        5 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select count(*) from Banktable as "bank";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"bank"' at line 1
+mysql> select count(*) from Banktable group by Account_type;
++----------+
+| count(*) |
++----------+
+|        4 |
+|        1 |
++----------+
+2 rows in set (0.00 sec)
+
+mysql> select avg(withdrawal) from Banktable  as bank;
++-----------------+
+| avg(withdrawal) |
++-----------------+
+|       2800.0000 |
++-----------------+
+1 row in set (0.00 sec)
+
+mysql> select max(withdrawal) from Banktable  as bank;
++-----------------+
+| max(withdrawal) |
++-----------------+
+|            5000 |
++-----------------+
+1 row in set (0.01 sec)
+
+mysql> select min(withdrawal) from Banktable  as bank;
++-----------------+
+| min(withdrawal) |
++-----------------+
+|            2000 |
++-----------------+
+1 row in set (0.00 sec)
+
+mysql> select min(withdrawal) as mini from Banktable  as bank;
++------+
+| mini |
++------+
+| 2000 |
++------+
+1 row in set (0.00 sec)
+
+mysql> select min(withdrawal) from Banktable  ;
++-----------------+
+| min(withdrawal) |
++-----------------+
+|            2000 |
++-----------------+
+1 row in set (0.00 sec)
+
+mysql> select min(withdrawal) as mini from Banktable  as bank;
++------+
+| mini |
++------+
+| 2000 |
++------+
+1 row in set (0.00 sec)
+
+mysql> 
+mysql> 
+mysql> select min(withdrawal) as mini from Banktable  as bank;
++------+
+| mini |
++------+
+| 2000 |
++------+
+1 row in set (0.00 sec)
+
+mysql> Terminal close -- exit!
